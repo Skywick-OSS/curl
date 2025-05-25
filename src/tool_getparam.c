@@ -2709,9 +2709,6 @@ static ParameterError opt_other(struct GlobalConfig *global,
   case C_REQUEST_TARGET: /* --request-target */
     err = getstr(&config->request_target, nextarg, DENY_BLANK);
     break;
-  case C_HELP: /* --help */
-    tool_help((nextarg && *nextarg) ? nextarg : NULL);
-    return PARAM_HELP_REQUESTED;
   case C_HEADER: /* --header */
   case C_PROXY_HEADER: /* --proxy-header */
     err = parse_header(global, config, a->cmd, nextarg);
@@ -2921,6 +2918,12 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         if(cleararg1)
           clearthis = &cleararg1[parse + 2 - flag];
 #endif
+      }
+      else if(a->cmd == C_HELP) {
+        /* --help is special */
+        tool_help((nextarg && *nextarg) ? nextarg : NULL);
+        err = PARAM_HELP_REQUESTED;
+        break;
       }
       else if(!nextarg) {
         err = PARAM_REQUIRES_PARAMETER;
