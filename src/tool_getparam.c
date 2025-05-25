@@ -2530,8 +2530,12 @@ static ParameterError opt_other(struct GlobalConfig *global,
       config->autoreferer = FALSE;
       len = strlen(nextarg);
     }
-    ptr = len ? nextarg : NULL;
-    err = getstrn(&config->referer, ptr, len, ALLOW_BLANK);
+    if(len) {
+      ptr = nextarg;
+      err = getstrn(&config->referer, ptr, len, ALLOW_BLANK);
+    }
+    else
+      tool_safefree(config->referer);
   }
     break;
   case C_CERT: /* --cert */
