@@ -2119,6 +2119,8 @@ static ParameterError opt_other(struct GlobalConfig *global,
     "ftps",
     NULL
   };
+  if(!nextarg)
+    nextarg = "";
 
   switch(a->cmd) {
   case C_RANDOM_FILE: /* --random-file */
@@ -2958,13 +2960,6 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       err = PARAM_LIBCURL_DOESNT_SUPPORT;
       break;
     }
-
-    if(!nextarg)
-      /* this is a precaution mostly to please scan-build, as all arguments
-         that use nextarg should be marked as such and they will check that
-         nextarg is set before continuing, but code analyzers are not always
-         that aware of that state */
-      nextarg = "";
 
     if(ARGTYPE(a->desc) == ARG_BOOL)
       err = opt_bool(global, config, a, toggle);
