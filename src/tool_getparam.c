@@ -2599,7 +2599,7 @@ static ParameterError opt_other(struct GlobalConfig *global,
       err = PARAM_LIBCURL_DOESNT_SUPPORT;
     else {
       err = getstr(&config->tls_authtype, nextarg, DENY_BLANK);
-      if(!err && strcmp(config->tls_authtype, "SRP"))
+      if(!err && config->tls_authtype && strcmp(config->tls_authtype, "SRP"))
         err = PARAM_LIBCURL_DOESNT_SUPPORT; /* only support TLS-SRP */
     }
     break;
