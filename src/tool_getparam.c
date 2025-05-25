@@ -51,14 +51,14 @@ static ParameterError getstr(char **str, const char *val, bool allowblank)
     free(*str);
     *str = NULL;
   }
-  if(val) {
-    if(!allowblank && !val[0])
-      return PARAM_BLANK_STRING;
+  DEBUGASSERT(val);
+  if(!allowblank && !val[0])
+    return PARAM_BLANK_STRING;
 
-    *str = strdup(val);
-    if(!*str)
-      return PARAM_NO_MEM;
-  }
+  *str = strdup(val);
+  if(!*str)
+    return PARAM_NO_MEM;
+
   return PARAM_OK;
 }
 
@@ -69,17 +69,17 @@ static ParameterError getstrn(char **str, const char *val,
     free(*str);
     *str = NULL;
   }
-  if(val) {
-    if(!allowblank && !val[0])
-      return PARAM_BLANK_STRING;
+  DEBUGASSERT(val);
+  if(!allowblank && !val[0])
+    return PARAM_BLANK_STRING;
 
-    *str = malloc(len + 1);
-    if(!*str)
-      return PARAM_NO_MEM;
+  *str = malloc(len + 1);
+  if(!*str)
+    return PARAM_NO_MEM;
 
-    memcpy(*str, val, len);
-    (*str)[len] = 0; /* null terminate */
-  }
+  memcpy(*str, val, len);
+  (*str)[len] = 0; /* null terminate */
+
   return PARAM_OK;
 }
 
