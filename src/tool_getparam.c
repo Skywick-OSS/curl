@@ -1721,7 +1721,6 @@ static ParameterError opt_bool(struct GlobalConfig *global,
       config->proxyntlm = toggle;
     break;
   case C_CRLF: /* --crlf */
-    /* LF -> CRLF conversion? */
     config->crlf = toggle;
     break;
   case C_HAPROXY_PROTOCOL: /* --haproxy-protocol */
@@ -1772,8 +1771,7 @@ static ParameterError opt_bool(struct GlobalConfig *global,
   case C_SSL: /* --ssl */
     config->ftp_ssl = toggle;
     if(config->ftp_ssl)
-      warnf(global,
-            "--%s is an insecure option, consider --ssl-reqd instead",
+      warnf(global, "--%s is an insecure option, consider --ssl-reqd instead",
             a->lname);
     break;
   case C_FTP_SSL_CCC: /* --ftp-ssl-ccc */
@@ -1886,7 +1884,6 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     global->progressmode = toggle ? CURL_PROGRESS_BAR : CURL_PROGRESS_STATS;
     break;
   case C_HTTP0_9: /* --http0.9 */
-    /* Allow HTTP/0.9 responses! */
     config->http09_allowed = toggle;
     break;
   case C_PROXY_HTTP2: /* --proxy-http2 */
@@ -1896,7 +1893,6 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     config->proxyver = toggle ? CURLPROXY_HTTPS2 : CURLPROXY_HTTPS;
     break;
   case C_APPEND: /* --append */
-    /* This makes the FTP sessions use APPE instead of STOR */
     config->ftp_append = toggle;
     break;
   case C_USE_ASCII: /* --use-ascii */
@@ -1994,8 +1990,7 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     break;
   case C_INCLUDE: /* --include */
   case C_SHOW_HEADERS: /* --show-headers */
-    config->show_headers = toggle; /* show the headers as well in the
-                                      general output stream */
+    config->show_headers = toggle;
     break;
   case C_JUNK_SESSION_COOKIES: /* --junk-session-cookies */
     config->cookiesession = toggle;
@@ -2020,29 +2015,22 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     config->dirlistonly = toggle; /* only list the names of the FTP dir */
     break;
   case C_LOCATION_TRUSTED: /* --location-trusted */
-    /* Continue to send authentication (user+password) when following
-     * locations, even when hostname changed */
     config->unrestricted_auth = toggle;
     FALLTHROUGH();
   case C_LOCATION: /* --location */
     config->followlocation = toggle; /* Follow Location: HTTP headers */
     break;
   case C_MANUAL: /* --manual */
-    if(toggle) { /* --no-manual shows no manual... */
+    if(toggle)   /* --no-manual shows no manual... */
       return PARAM_MANUAL_REQUESTED;
-    }
     break;
   case C_NETRC_OPTIONAL: /* --netrc-optional */
     config->netrc_opt = toggle;
     break;
   case C_NETRC: /* --netrc */
-    /* pick info from .netrc, if this is used for http, curl will
-       automatically enforce user+password with the request */
     config->netrc = toggle;
     break;
   case C_BUFFER: /* --buffer */
-    /* disable the output I/O buffering. note that the option is called
-       --buffer but is mostly used in the negative form: --no-buffer */
     config->nobuffer = !toggle;
     break;
   case C_REMOTE_NAME_ALL: /* --remote-name-all */
@@ -2060,16 +2048,13 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     return parse_remote_name(config, toggle);
     break;
   case C_PROXYTUNNEL: /* --proxytunnel */
-    /* proxy tunnel for non-http protocols */
     config->proxytunnel = toggle;
     break;
-
   case C_DISABLE: /* --disable */
     /* if used first, already taken care of, we do it like this so we do not
        cause an error! */
     break;
   case C_REMOTE_TIME: /* --remote-time */
-    /* use remote file's time */
     config->remote_time = toggle;
     break;
   case C_SILENT: /* --silent */
