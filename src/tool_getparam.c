@@ -96,7 +96,7 @@ static const struct LongShort aliases[]= {
   {"ca-native",                  ARG_BOOL|ARG_TLS, ' ', C_CA_NATIVE},
   {"cacert",                     ARG_FILE|ARG_TLS, ' ', C_CACERT},
   {"capath",                     ARG_FILE|ARG_TLS, ' ', C_CAPATH},
-  {"cert",                       ARG_FILE|ARG_TLS, 'E', C_CERT},
+  {"cert",                       ARG_FILE|ARG_TLS|ARG_CLEAR, 'E', C_CERT},
   {"cert-status",                ARG_BOOL|ARG_TLS, ' ', C_CERT_STATUS},
   {"cert-type",                  ARG_STRG|ARG_TLS, ' ', C_CERT_TYPE},
   {"ciphers",                    ARG_STRG|ARG_TLS, ' ', C_CIPHERS},
@@ -225,13 +225,13 @@ static const struct LongShort aliases[]= {
   {"npn",                        ARG_BOOL|ARG_NO, ' ', C_NPN},
   {"ntlm",                       ARG_BOOL, ' ', C_NTLM},
   {"ntlm-wb",                    ARG_BOOL, ' ', C_NTLM_WB},
-  {"oauth2-bearer",              ARG_STRG, ' ', C_OAUTH2_BEARER},
+  {"oauth2-bearer",              ARG_STRG|ARG_CLEAR, ' ', C_OAUTH2_BEARER},
   {"output",                     ARG_FILE, 'o', C_OUTPUT},
   {"output-dir",                 ARG_STRG, ' ', C_OUTPUT_DIR},
   {"parallel",                   ARG_BOOL, 'Z', C_PARALLEL},
   {"parallel-immediate",         ARG_BOOL, ' ', C_PARALLEL_IMMEDIATE},
   {"parallel-max",               ARG_STRG, ' ', C_PARALLEL_MAX},
-  {"pass",                       ARG_STRG, ' ', C_PASS},
+  {"pass",                       ARG_STRG|ARG_CLEAR, ' ', C_PASS},
   {"path-as-is",                 ARG_BOOL, ' ', C_PATH_AS_IS},
   {"pinnedpubkey",               ARG_STRG|ARG_TLS, ' ', C_PINNEDPUBKEY},
   {"post301",                    ARG_BOOL, ' ', C_POST301},
@@ -249,7 +249,7 @@ static const struct LongShort aliases[]= {
   {"proxy-ca-native",            ARG_BOOL|ARG_TLS, ' ', C_PROXY_CA_NATIVE},
   {"proxy-cacert",               ARG_FILE|ARG_TLS, ' ', C_PROXY_CACERT},
   {"proxy-capath",               ARG_FILE|ARG_TLS, ' ', C_PROXY_CAPATH},
-  {"proxy-cert",                 ARG_FILE|ARG_TLS, ' ', C_PROXY_CERT},
+  {"proxy-cert",                ARG_FILE|ARG_TLS|ARG_CLEAR, ' ', C_PROXY_CERT},
   {"proxy-cert-type",            ARG_STRG|ARG_TLS, ' ', C_PROXY_CERT_TYPE},
   {"proxy-ciphers",              ARG_STRG|ARG_TLS, ' ', C_PROXY_CIPHERS},
   {"proxy-crlfile",              ARG_FILE|ARG_TLS, ' ', C_PROXY_CRLFILE},
@@ -261,7 +261,7 @@ static const struct LongShort aliases[]= {
   {"proxy-key-type",             ARG_STRG|ARG_TLS, ' ', C_PROXY_KEY_TYPE},
   {"proxy-negotiate",            ARG_BOOL, ' ', C_PROXY_NEGOTIATE},
   {"proxy-ntlm",                 ARG_BOOL, ' ', C_PROXY_NTLM},
-  {"proxy-pass",                 ARG_STRG, ' ', C_PROXY_PASS},
+  {"proxy-pass",                 ARG_STRG|ARG_CLEAR, ' ', C_PROXY_PASS},
   {"proxy-pinnedpubkey",         ARG_STRG|ARG_TLS, ' ', C_PROXY_PINNEDPUBKEY},
   {"proxy-service-name",         ARG_STRG, ' ', C_PROXY_SERVICE_NAME},
   {"proxy-ssl-allow-beast",      ARG_BOOL|ARG_TLS, ' ',
@@ -270,10 +270,10 @@ static const struct LongShort aliases[]= {
    C_PROXY_SSL_AUTO_CLIENT_CERT},
   {"proxy-tls13-ciphers",        ARG_STRG|ARG_TLS, ' ', C_PROXY_TLS13_CIPHERS},
   {"proxy-tlsauthtype",          ARG_STRG|ARG_TLS, ' ', C_PROXY_TLSAUTHTYPE},
-  {"proxy-tlspassword",          ARG_STRG|ARG_TLS, ' ', C_PROXY_TLSPASSWORD},
-  {"proxy-tlsuser",              ARG_STRG|ARG_TLS, ' ', C_PROXY_TLSUSER},
+  {"proxy-tlspassword",  ARG_STRG|ARG_TLS|ARG_CLEAR, ' ', C_PROXY_TLSPASSWORD},
+  {"proxy-tlsuser",          ARG_STRG|ARG_TLS|ARG_CLEAR, ' ', C_PROXY_TLSUSER},
   {"proxy-tlsv1",                ARG_NONE|ARG_TLS, ' ', C_PROXY_TLSV1},
-  {"proxy-user",                 ARG_STRG, 'U', C_PROXY_USER},
+  {"proxy-user",                 ARG_STRG|ARG_CLEAR, 'U', C_PROXY_USER},
   {"proxy1.0",                   ARG_STRG, ' ', C_PROXY1_0},
   {"proxytunnel",                ARG_BOOL, 'p', C_PROXYTUNNEL},
   {"pubkey",                     ARG_STRG, ' ', C_PUBKEY},
@@ -344,8 +344,8 @@ static const struct LongShort aliases[]= {
   {"tls-max",                    ARG_STRG|ARG_TLS, ' ', C_TLS_MAX},
   {"tls13-ciphers",              ARG_STRG|ARG_TLS, ' ', C_TLS13_CIPHERS},
   {"tlsauthtype",                ARG_STRG|ARG_TLS, ' ', C_TLSAUTHTYPE},
-  {"tlspassword",                ARG_STRG|ARG_TLS, ' ', C_TLSPASSWORD},
-  {"tlsuser",                    ARG_STRG|ARG_TLS, ' ', C_TLSUSER},
+  {"tlspassword",              ARG_STRG|ARG_TLS|ARG_CLEAR, ' ', C_TLSPASSWORD},
+  {"tlsuser",                    ARG_STRG|ARG_TLS|ARG_CLEAR, ' ', C_TLSUSER},
   {"tlsv1",                      ARG_NONE|ARG_TLS, '1', C_TLSV1},
   {"tlsv1.0",                    ARG_NONE|ARG_TLS, ' ', C_TLSV1_0},
   {"tlsv1.1",                    ARG_NONE|ARG_TLS, ' ', C_TLSV1_1},
@@ -363,7 +363,7 @@ static const struct LongShort aliases[]= {
   {"url",                        ARG_STRG, ' ', C_URL},
   {"url-query",                  ARG_STRG, ' ', C_URL_QUERY},
   {"use-ascii",                  ARG_BOOL, 'B', C_USE_ASCII},
-  {"user",                       ARG_STRG, 'u', C_USER},
+  {"user",                       ARG_STRG|ARG_CLEAR, 'u', C_USER},
   {"user-agent",                 ARG_STRG, 'A', C_USER_AGENT},
   {"variable",                   ARG_STRG, ' ', C_VARIABLE},
   {"verbose",                    ARG_BOOL, 'v', C_VERBOSE},
@@ -1853,10 +1853,7 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       break;
     case C_OAUTH2_BEARER: /* --oauth2-bearer */
       err = getstr(&config->oauth_bearer, nextarg, DENY_BLANK);
-      if(!err) {
-        cleanarg(clearthis);
-        config->authtype |= CURLAUTH_BEARER;
-      }
+      config->authtype |= CURLAUTH_BEARER;
       break;
     case C_CONNECT_TIMEOUT: /* --connect-timeout */
       err = secs2ms(&config->connecttimeout_ms, nextarg);
@@ -2469,7 +2466,6 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       break;
     case C_CERT: /* --cert */
       GetFileAndPassword(nextarg, &config->cert, &config->key_passwd);
-      cleanarg(clearthis);
       break;
     case C_CACERT: /* --cacert */
       err = getstr(&config->cacert, nextarg, DENY_BLANK);
@@ -2491,7 +2487,6 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       break;
     case C_PASS: /* --pass */
       err = getstr(&config->key_passwd, nextarg, DENY_BLANK);
-      cleanarg(clearthis);
       break;
     case C_ENGINE: /* --engine */
       err = getstr(&config->engine, nextarg, DENY_BLANK);
@@ -2530,14 +2525,12 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         err = PARAM_LIBCURL_DOESNT_SUPPORT;
       else
         err = getstr(&config->tls_username, nextarg, DENY_BLANK);
-      cleanarg(clearthis);
       break;
     case C_TLSPASSWORD: /* --tlspassword */
       if(!feature_tls_srp)
         err = PARAM_LIBCURL_DOESNT_SUPPORT;
       else
         err = getstr(&config->tls_password, nextarg, ALLOW_BLANK);
-      cleanarg(clearthis);
       break;
     case C_TLSAUTHTYPE: /* --tlsauthtype */
       if(!feature_tls_srp)
@@ -2592,14 +2585,12 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         err = PARAM_LIBCURL_DOESNT_SUPPORT;
       else
         err = getstr(&config->proxy_tls_username, nextarg, ALLOW_BLANK);
-      cleanarg(clearthis);
       break;
     case C_PROXY_TLSPASSWORD: /* --proxy-tlspassword */
       if(!feature_tls_srp)
         err = PARAM_LIBCURL_DOESNT_SUPPORT;
       else
         err = getstr(&config->proxy_tls_password, nextarg, DENY_BLANK);
-      cleanarg(clearthis);
       break;
     case C_PROXY_TLSAUTHTYPE: /* --proxy-tlsauthtype */
       if(!feature_tls_srp)
@@ -2613,7 +2604,6 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
     case C_PROXY_CERT: /* --proxy-cert */
       GetFileAndPassword(nextarg, &config->proxy_cert,
                          &config->proxy_key_passwd);
-      cleanarg(clearthis);
       break;
     case C_PROXY_CERT_TYPE: /* --proxy-cert-type */
       err = getstr(&config->proxy_cert_type, nextarg, DENY_BLANK);
@@ -2626,7 +2616,6 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       break;
     case C_PROXY_PASS: /* --proxy-pass */
       err = getstr(&config->proxy_key_passwd, nextarg, ALLOW_BLANK);
-      cleanarg(clearthis);
       break;
     case C_PROXY_CIPHERS: /* --proxy-ciphers */
       err = getstr(&config->proxy_cipher_list, nextarg, DENY_BLANK);
@@ -2885,12 +2874,10 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
     case C_USER: /* --user */
       /* user:password  */
       err = getstr(&config->userpwd, nextarg, ALLOW_BLANK);
-      cleanarg(clearthis);
       break;
     case C_PROXY_USER: /* --proxy-user */
       /* Proxy user:password  */
       err = getstr(&config->proxyuserpwd, nextarg, ALLOW_BLANK);
-      cleanarg(clearthis);
       break;
     case C_VERBOSE: /* --verbose */
       err = parse_verbose(global, toggle, nopts);
@@ -2959,6 +2946,9 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       err = PARAM_OPTION_UNKNOWN;
       break;
     }
+    if(a->desc & ARG_CLEAR)
+      cleanarg(clearthis);
+
     a = NULL;
     ++nopts; /* processed one option from `flag` input, loop for more */
   } while(!longopt && !singleopt && *++parse && !*usedarg && !err);
