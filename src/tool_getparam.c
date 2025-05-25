@@ -2159,7 +2159,7 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         config->ftp_ssl_ccc_mode = CURLFTPSSL_CCC_PASSIVE;
       break;
     case C_FTP_SSL_CCC_MODE: /* --ftp-ssl-ccc-mode */
-      config->ftp_ssl_ccc = TRUE;
+      config->ftp_ssl_ccc = toggle;
       config->ftp_ssl_ccc_mode = ftpcccmethod(config, nextarg);
       break;
     case C_LIBCURL: /* --libcurl */
@@ -2557,19 +2557,19 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       err = getstr(&config->proxy_pinnedpubkey, nextarg, DENY_BLANK);
       break;
     case C_CERT_STATUS: /* --cert-status */
-      config->verifystatus = TRUE;
+      config->verifystatus = toggle;
       break;
     case C_DOH_CERT_STATUS: /* --doh-cert-status */
-      config->doh_verifystatus = TRUE;
+      config->doh_verifystatus = toggle;
       break;
     case C_FALSE_START: /* --false-start */
-      config->falsestart = TRUE;
+      config->falsestart = toggle;
       break;
     case C_SSL_NO_REVOKE: /* --ssl-no-revoke */
-      config->ssl_no_revoke = TRUE;
+      config->ssl_no_revoke = toggle;
       break;
     case C_SSL_REVOKE_BEST_EFFORT: /* --ssl-revoke-best-effort */
-      config->ssl_revoke_best_effort = TRUE;
+      config->ssl_revoke_best_effort = toggle;
       break;
     case C_SSL_SESSIONS: /* --ssl-sessions */
       if(feature_ssls_export)
@@ -2578,7 +2578,7 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         err = PARAM_LIBCURL_DOESNT_SUPPORT;
       break;
     case C_TCP_FASTOPEN: /* --tcp-fastopen */
-      config->tcp_fastopen = TRUE;
+      config->tcp_fastopen = toggle;
       break;
     case C_PROXY_TLSUSER: /* --proxy-tlsuser */
       if(!feature_tls_srp)
@@ -2937,7 +2937,7 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       err = parse_time_cond(global, config, nextarg);
       break;
     case C_MPTCP: /* --mptcp */
-      config->mptcp = TRUE;
+      config->mptcp = toggle;
       break;
     case C_UPLOAD_FLAGS: /* --upload-flags */
       err = parse_upload_flags(config, nextarg);
