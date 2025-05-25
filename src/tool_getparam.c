@@ -1740,7 +1740,7 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     togglebit(toggle, &config->authtype, CURLAUTH_NEGOTIATE);
     break;
   case C_NTLM: /* --ntlm */
-    if(feature_ntlm && toggle)
+    if(!feature_ntlm && toggle)
       return PARAM_LIBCURL_DOESNT_SUPPORT;
     togglebit(toggle, &config->authtype, CURLAUTH_NTLM);
     break;
