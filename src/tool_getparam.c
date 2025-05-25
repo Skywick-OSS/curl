@@ -2518,22 +2518,19 @@ static ParameterError opt_other(struct GlobalConfig *global,
     err = getstr(&config->headerfile, nextarg, DENY_BLANK);
     break;
   case C_REFERER: { /* --referer */
-    const char *ptr = strstr(nextarg, ";auto");
-    size_t len;
-    if(ptr) {
-      /* Automatic referer requested, this may be combined with a
-         set initial one */
+    size_t len = strlen(nextarg);
+    /* does it end with ;auto ? */
+    if(len >= 5 && !strcmp(";auto", &nextarg[len - 5])) {
+      /* Automatic referer requested, this may be combined with a set initial
+         one */
       config->autoreferer = TRUE;
-      len = ptr - nextarg;
+      len -= 5;
     }
-    else {
+    else
       config->autoreferer = FALSE;
-      len = strlen(nextarg);
-    }
-    if(len) {
-      ptr = nextarg;
-      err = getstrn(&config->referer, ptr, len, ALLOW_BLANK);
-    }
+
+    if(len)
+      err = getstrn(&config->referer, nextarg, len, ALLOW_BLANK);
     else
       tool_safefree(config->referer);
   }
