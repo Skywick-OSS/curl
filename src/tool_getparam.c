@@ -1674,6 +1674,17 @@ static ParameterError parse_upload_flags(struct OperationConfig *config,
   return err;
 }
 
+/* if 'toggle' is TRUE, set the 'bits' in 'modify'.
+   if 'toggle' is FALSE, cleaer the 'bits' in 'modify'
+*/
+static void togglebit(bool toggle, unsigned long *modify, unsigned long bits)
+{
+  if(toggle)
+    *modify |= bits;
+  else
+    *modify &= ~bits;
+}
+
 /* opt_bool is the function that handles boolean options */
 static ParameterError opt_bool(struct GlobalConfig *global,
                                struct OperationConfig *config,
@@ -1703,10 +1714,7 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     config->tr_encoding = toggle;
     break;
   case C_DIGEST: /* --digest */
-    if(toggle)
-      config->authtype |= CURLAUTH_DIGEST;
-    else
-      config->authtype &= ~CURLAUTH_DIGEST;
+    togglebit(toggle, &config->authtype, CURLAUTH_DIGEST);
     break;
   case C_FTP_CREATE_DIRS: /* --ftp-create-dirs */
     config->ftp_create_dirs = toggle;
@@ -1727,26 +1735,17 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     config->haproxy_protocol = toggle;
     break;
   case C_NEGOTIATE: /* --negotiate */
-    if(!toggle)
-      config->authtype &= ~CURLAUTH_NEGOTIATE;
-    else if(feature_spnego)
-      config->authtype |= CURLAUTH_NEGOTIATE;
-    else
+    if(!feature_spnego && toggle)
       return PARAM_LIBCURL_DOESNT_SUPPORT;
+    togglebit(toggle, &config->authtype, CURLAUTH_NEGOTIATE);
     break;
   case C_NTLM: /* --ntlm */
-    if(!toggle)
-      config->authtype &= ~CURLAUTH_NTLM;
-    else if(feature_ntlm)
-      config->authtype |= CURLAUTH_NTLM;
-    else
+    if(feature_ntlm && toggle)
       return PARAM_LIBCURL_DOESNT_SUPPORT;
+    togglebit(toggle, &config->authtype, CURLAUTH_NTLM);
     break;
   case C_BASIC: /* --basic */
-    if(toggle)
-      config->authtype |= CURLAUTH_BASIC;
-    else
-      config->authtype &= ~CURLAUTH_BASIC;
+    togglebit(toggle, &config->authtype, CURLAUTH_BASIC);
     break;
   case C_ANYAUTH: /* --anyauth */
     if(toggle)
@@ -1801,9 +1800,7 @@ static ParameterError opt_bool(struct GlobalConfig *global,
       config->proxynegotiate = toggle;
     break;
   case C_FORM_ESCAPE: /* --form-escape */
-    config->mime_options &= ~CURLMIMEOPT_FORMESCAPE;
-    if(toggle)
-      config->mime_options |= CURLMIMEOPT_FORMESCAPE;
+    togglebit(toggle, &config->mime_options, CURLMIMEOPT_FORMESCAPE);
     break;
   case C_PROXY_ANYAUTH: /* --proxy-anyauth */
     config->proxyanyauth = toggle;
@@ -1938,16 +1935,10 @@ static ParameterError opt_bool(struct GlobalConfig *global,
     config->proxy_insecure_ok = toggle;
     break;
   case C_SOCKS5_BASIC: /* --socks5-basic */
-    if(toggle)
-      config->socks5_auth |= CURLAUTH_BASIC;
-    else
-      config->socks5_auth &= ~CURLAUTH_BASIC;
+    togglebit(toggle, &config->socks5_auth, CURLAUTH_BASIC);
     break;
   case C_SOCKS5_GSSAPI: /* --socks5-gssapi */
-    if(toggle)
-      config->socks5_auth |= CURLAUTH_GSSAPI;
-    else
-      config->socks5_auth &= ~CURLAUTH_GSSAPI;
+    togglebit(toggle, &config->socks5_auth, CURLAUTH_GSSAPI);
     break;
   case C_FAIL_EARLY: /* --fail-early */
     global->fail_early = toggle;
