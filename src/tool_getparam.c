@@ -584,7 +584,7 @@ static void cleanarg(argv_item_t str)
   }
 }
 #else
-#define cleanarg(x)
+#define cleanarg(x) tool_nop_stmt
 #endif
 
 /* the maximum size we allow the dynbuf generated string */
