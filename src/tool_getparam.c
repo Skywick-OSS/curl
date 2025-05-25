@@ -1776,6 +1776,11 @@ static ParameterError opt_bool(struct GlobalConfig *global,
             "--%s is an insecure option, consider --ssl-reqd instead",
             a->lname);
     break;
+  case C_FTP_SSL_CCC: /* --ftp-ssl-ccc */
+    config->ftp_ssl_ccc = toggle;
+    if(!config->ftp_ssl_ccc_mode)
+      config->ftp_ssl_ccc_mode = CURLFTPSSL_CCC_PASSIVE;
+    break;
   case C_TCP_NODELAY: /* --tcp-nodelay */
     config->tcp_nodelay = toggle;
     break;
@@ -2738,10 +2743,9 @@ static ParameterError opt_other(struct GlobalConfig *global,
     */
     err = getstr(&config->ftpport, nextarg, DENY_BLANK);
     break;
-  case C_FTP_SSL_CCC: /* --ftp-ssl-ccc */
+  case C_FTP_SSL_CCC_MODE: /* --ftp-ssl-ccc-mode */
     config->ftp_ssl_ccc = TRUE;
-    if(!config->ftp_ssl_ccc_mode)
-      config->ftp_ssl_ccc_mode = CURLFTPSSL_CCC_PASSIVE;
+    config->ftp_ssl_ccc_mode = ftpcccmethod(config, nextarg);
     break;
   case C_QUOTE: /* --quote */
     err = parse_quote(config, nextarg);
