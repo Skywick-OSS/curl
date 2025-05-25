@@ -2504,7 +2504,7 @@ static ParameterError opt_other(struct GlobalConfig *global,
   case C_DATA_URLENCODE:  /* --data-urlencode */
   case C_JSON:  /* --json */
   case C_DATA_RAW:  /* --data-raw */
-    err = set_data(a->cmd, nextarg, global, config);
+    err = set_data((cmdline_t)a->cmd, nextarg, global, config);
     break;
   case C_URL_QUERY:  /* --url-query */
     err = url_query(nextarg, global, config);
@@ -2712,7 +2712,7 @@ static ParameterError opt_other(struct GlobalConfig *global,
     break;
   case C_HEADER: /* --header */
   case C_PROXY_HEADER: /* --proxy-header */
-    err = parse_header(global, config, a->cmd, nextarg);
+    err = parse_header(global, config, (cmdline_t)a->cmd, nextarg);
     break;
   case C_CONFIG: /* --config */
     if(parseconfig(nextarg, global)) {
